@@ -19,7 +19,7 @@ def setUpInvaders():
     
     y = 50
     num_rows = 5
-    num_invaders_per_row = 10
+    num_invaders_per_row = 15
     
     while y<= 50*num_rows:
         x = 50
