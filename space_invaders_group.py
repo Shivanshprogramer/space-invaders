@@ -7,7 +7,7 @@ height = 1000
 
 screen = display.set_mode((width, height))
 
-invaderImage = image.load('Webp.net-resizeimage.jpg')
+invaderImage = image.load('alien.jpg')
 
 gameOver = False
 
