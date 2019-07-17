@@ -11,6 +11,9 @@ invaderImage = image.load('alien.jpg')
 
 gameOver = False
 
+i_move_x=1.5
+i_move_y=70
+
 #input - none
 #output - a list of invaders
 
@@ -50,10 +53,26 @@ while not gameOver :
             gameOver = True
             
     screen.fill((0,0,0))
-    
+
+    for invader in invaderList:
+        if invader.right > width or invader.left < 0:
+            i_move_x *= -1
+            for invader in invaderList:
+                invader.move_ip(0,i_move_y)
+            break
+
+
+    for invader in invaderList:
+        invader.move_ip(i_move_x,0)
+
+
+
     #draw invaders
     drawInvaders(invaderList, screen)
-    
+
+
+
+
     #show the newly drawn screen (double buffering)
     display.flip()
     
