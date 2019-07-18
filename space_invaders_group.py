@@ -110,6 +110,7 @@ def play():
     i_move_y = 40
     paused_state = 0
     lives = 5
+    score=0
 
     while not gameOver:
         for e in event.get():
@@ -122,7 +123,7 @@ def play():
             elif e.type == KEYDOWN:
                 if e.key == K_ESCAPE:
                     initial()
-                if e.key==K_SPACE and len(playerBullets)<6:
+                if e.key==K_SPACE and len(playerBullets)<6 and paused_state==0:
                     mixer.music.load("shoot.wav")
                     mixer.music.play()
                     playerBullets.append(Rect(player.x+50, player.y,5,20))
@@ -152,37 +153,38 @@ def play():
        # control enemy bullets fire
         for i in invaderList:
             fireChance = random.random() # pick a number from 0 to 1
-            if fireChance <= probabilityToFire  and len(enemyBullets) <= maxEnemyBullets:
+            if fireChance <= probabilityToFire  and len(enemyBullets) <= maxEnemyBullets and paused_state==0:
                 enemyBullets.append(Rect(i.x,i.y,5,20))
 
         # move enemy bullets and check collision with player
-        for b in enemyBullets:
-            b.move_ip(0,3)
-            if b.colliderect(player):
-                mixer.music.load("shipexplosion.wav")
-                mixer.music.play()
-                lives=lives-1
-                if lives ==0:
-                    gameOver=True
-                enemyBullets.remove(b)
+        if paused_state==0:
+            for b in enemyBullets:
+                b.move_ip(0,3)
+                if b.colliderect(player):
+                    mixer.music.load("shipexplosion.wav")
+                    mixer.music.play()
+                    lives=lives-1
+                    if lives ==0:
+                        gameOver=True
+                    enemyBullets.remove(b)
 
-            if b.y > height :
-                enemyBullets.remove(b)
+                if b.y > height :
+                    enemyBullets.remove(b)
 
         pressed= key.get_pressed()
 
-        if pressed[K_RIGHT]==1:
+        if pressed[K_RIGHT]==1 and paused_state==0:
             player.move_ip(2,0)
-        if pressed[K_LEFT]==1:
+        if pressed[K_LEFT]==1 and paused_state==0:
             player.move_ip(-2,0)
 
         screen.fill((0,0,0))
 
         myfont = font.SysFont('Comic Sans MS', 18)
-        textsurface = myfont.render('ESC - quit the game       P - pause the game', False, BLUE)
+        textsurface = myfont.render('ESC - quit the game       P - pause the game       SPACE- shoot', False, BLUE)
         screen.blit(textsurface, (30, 10))
-        textSurface = myfont.render((str(score)), False, BLUE)
-        screen.blit(textSurface, (30, 20))
+        textSurface = myfont.render((str(score)), False, GOLD)
+        screen.blit(textSurface, (width-220, 10))
         count=0
         while count<lives:
             screen.blit(lives_image,((width-150)+(count*30),10))
@@ -205,8 +207,8 @@ def play():
         # draw bullets
         for b in playerBullets:
             draw.rect(screen, (255, 255, 255), b)
-            for b in enemyBullets:
-                draw.rect(screen, (255, 0, 0), b)
+        for b in enemyBullets:
+            draw.rect(screen, (255, 0, 0), b)
 
         if paused_state==1:
             myfont = font.SysFont('Comic Sans MS', 60)
