@@ -31,6 +31,8 @@ paused_state=0
 
 lives=0
 
+
+player = Rect(600, 600, 100, 100)
 #input - none
 #output - a list of invaders
 
@@ -75,7 +77,7 @@ def setUpInvaders():
 #output - invaders drwan on the screen
 
 def drawInvaders(invaderList, screen):
-    player = Rect(600, 600, 100, 100)
+    global player
     for i in invaderList:
         screen.blit(invaderImage, i)
     playerImage= image.load("ship.png")
@@ -83,9 +85,10 @@ def drawInvaders(invaderList, screen):
 gameOver = False
 
 def play():
-    global gameOver, i_move_y, i_move_x, invaderList, screen, paused_state,lives
+    global gameOver, i_move_y, i_move_x, invaderList, screen, paused_state,lives, player
     # set up invaders
     invaderList = setUpInvaders()
+    player = Rect(600, 600, 100, 100)
 
     #initialising the values when game starts
     i_move_x = 1.5
