@@ -226,6 +226,8 @@ def play():
 def game_over():
     global screen,gameOver
     screen.fill((0, 0, 0))
+    mixer.music.load("gameover.wav")
+    mixer.music.play()
     background_image=image.load("background.jpg")
     screen.blit(background_image,(0,0))
     font.init()
