@@ -32,7 +32,7 @@ temp_y=0
 paused_state=0
 
 lives=0
-
+score=0
 
 player = Rect(600, 600, 100, 100)
 #input - none
@@ -87,7 +87,7 @@ def drawInvaders(invaderList, screen):
 gameOver = False
 
 def play():
-    global gameOver, i_move_y, i_move_x, invaderList, screen, paused_state,lives, player
+    global gameOver, i_move_y, i_move_x, invaderList, screen, paused_state,lives, player,score
     # set up invaders
     invaderList = setUpInvaders()
     # set up player
@@ -143,6 +143,9 @@ def play():
                 for i in invaderList :
                     if i.colliderect(b):
                         invaderList.remove(i)
+                        score=score+100
+                        mixer.music.load("invaderkilled.wav")
+                        mixer.music.play()
                         playerBullets.remove(b)
                         break
 
