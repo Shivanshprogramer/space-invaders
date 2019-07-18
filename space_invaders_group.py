@@ -102,8 +102,8 @@ def play():
     # set up enemy bullets
 
     enemyBullets = []
-    probabilityToFire = 0.0001 # this will control how often the enemy will fire
-    maxEnemyBullets = 8 # stop there being too many bullets on screen at once
+    probabilityToFire = 0.0005 # this will control how often the enemy will fire
+    maxEnemyBullets = 15 # stop there being too many bullets on screen at once
 
     #initialising the values when game starts
     i_move_x = 1
@@ -216,6 +216,15 @@ def play():
             draw.rect(screen,BLACK,((width/2)-210,height/2,450,100))
             screen.blit(textsurface, ((width/2)-200, height/2))
         #show the newly drawn screen (double buffering)
+        if score==6000:
+            screen.fill((0,0,0))
+            font.init()
+            myfont = font.SysFont('Comic Sans MS',56)
+            textsurface = myfont.render('YOU WON',False,RED)
+            screen.blit(textsurface,((width/2)-100,height-100))
+            logo= image.load("logo.jpg")
+            screen.blit(logo,((width/2)-200,(height/2)-200))
+            display.flip()
         display.flip()
 
         #short delay to slow down animation
@@ -241,5 +250,13 @@ def initial():
                 play()
 
 
+    screen.fill((0,0,0))
+    font.init()
+    myfont = font.SysFont('Comic Sans MS',56)
+    textsurface = myfont.render('GAME OVER',False,RED)
+    screen.blit(textsurface,((width/2)-100,height-100))
+    logo= image.load("logo.jpg")
+    screen.blit(logo,((width/2)-200,(height/2)-200))
+    display.flip()
 
 initial()
