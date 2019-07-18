@@ -159,6 +159,8 @@ def play():
                 mixer.music.load("shipexplosion.wav")
                 mixer.music.play()
                 lives=lives-1
+                if lives ==0:
+                    gameOver=True
                 enemyBullets.remove(b)
 
             if b.y > height :
