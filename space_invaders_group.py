@@ -226,6 +226,8 @@ def play():
 def game_over():
     global screen,gameOver
     screen.fill((0, 0, 0))
+    background_image=image.load("background.jpg")
+    screen.blit(background_image,(0,0))
     font.init()
     myfont = font.SysFont('Comic Sans MS', 72)
     textsurface = myfont.render('GAME OVER', False, GOLD)
@@ -250,6 +252,8 @@ def game_over():
 def win_screen():
     global screen, gameOver
     screen.fill((0, 0, 0))
+    background_image=image.load("background.jpg")
+    screen.blit(background_image,(0,0))
     font.init()
     myfont = font.SysFont('Comic Sans MS', 90)
     textsurface = myfont.render('YOU WON', False, GOLD)
