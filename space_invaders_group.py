@@ -75,9 +75,11 @@ def setUpInvaders():
 #output - invaders drwan on the screen
 
 def drawInvaders(invaderList, screen):
+    player = Rect(600, 600, 100, 100)
     for i in invaderList:
         screen.blit(invaderImage, i)
-
+    playerImage= image.load("ship.png")
+    screen.blit(playerImage, player)
 gameOver = False
 
 def play():
