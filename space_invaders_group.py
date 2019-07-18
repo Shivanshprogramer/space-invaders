@@ -257,7 +257,7 @@ def initial():
     screen.blit(textsurface,((width/2)-100,height-100))
     logo= image.load("logo.jpg")
     screen.blit(logo,((width/2)-200,(height/2)-200))
-    mixer.music.load("gameover.mp3")
+    mixer.music.load("gameover.wav")
     mixer.music.play()
     display.flip()
 
