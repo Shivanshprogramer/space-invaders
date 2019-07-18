@@ -91,8 +91,8 @@ def play():
     player = Rect(600, 600, 100, 100)
 
     #initialising the values when game starts
-    i_move_x = 1.5
-    i_move_y = 70
+    i_move_x = 1
+    i_move_y = 40
     paused_state = 0
     lives = 5
 
@@ -104,6 +104,13 @@ def play():
                 initial()
             elif e.type == KEYDOWN and e.key == K_p:
                 pause()
+
+        pressed= key.get_pressed()
+
+        if pressed[K_RIGHT]==1:
+            player.move_ip(2,0)
+        if pressed[K_LEFT]==1:
+            player.move_ip(-2,0)
 
         screen.fill((0,0,0))
 
