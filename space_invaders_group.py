@@ -165,7 +165,7 @@ def play():
                     mixer.music.play()
                     lives=lives-1
                     if lives ==0:
-                        gameOver=True
+                        game_over()
                     enemyBullets.remove(b)
 
                 if b.y > height :
@@ -216,19 +216,57 @@ def play():
             draw.rect(screen,BLACK,((width/2)-210,height/2,450,100))
             screen.blit(textsurface, ((width/2)-200, height/2))
         #show the newly drawn screen (double buffering)
-        if score==6000:
-            screen.fill((0,0,0))
-            font.init()
-            myfont = font.SysFont('Comic Sans MS',56)
-            textsurface = myfont.render('YOU WON',False,RED)
-            screen.blit(textsurface,((width/2)-100,height-100))
-            logo= image.load("logo.jpg")
-            screen.blit(logo,((width/2)-200,(height/2)-200))
-            display.flip()
+        if len(invaderList)==0:
+            win_screen()
+
         display.flip()
 
         #short delay to slow down animation
         time.delay(5)
+def game_over():
+    global screen,gameOver
+    screen.fill((0, 0, 0))
+    font.init()
+    myfont = font.SysFont('Comic Sans MS', 72)
+    textsurface = myfont.render('GAME OVER', False, GOLD)
+    screen.blit(textsurface, ((width / 2) - 180, height/2 - 180))
+    myfont = font.SysFont('Comic Sans MS', 26)
+    textsurface = myfont.render('Enter SPACE to go to main screen', False, BLUE)
+    screen.blit(textsurface, ((width / 2) - 200, height -100))
+    myfont = font.SysFont('Comic Sans MS', 46)
+    textsurface = myfont.render('Your score is:-', False, RED)
+    screen.blit(textsurface, ((width / 2) - 200, height / 2 -20))
+    textsurface = myfont.render(str(score), False, GOLD)
+    screen.blit(textsurface, ((width / 2) +150, height / 2 -20))
+    display.flip()
+    while not gameOver :
+        for e in event.get():
+            if e.type == QUIT :
+                gameOver = True
+
+            if e.type ==KEYDOWN and e.key == K_SPACE:
+                initial()
+
+def win_screen():
+    global screen, gameOver
+    screen.fill((0, 0, 0))
+    font.init()
+    myfont = font.SysFont('Comic Sans MS', 90)
+    textsurface = myfont.render('YOU WON', False, GOLD)
+    screen.blit(textsurface, ((width / 2) - 180, height / 2 - 100))
+    myfont = font.SysFont('Comic Sans MS', 30)
+    textsurface = myfont.render('press SPACE to to go back', False, BLUE)
+    screen.blit(textsurface, ((width / 2) - 150, height-100))
+    display.flip()
+
+    while not gameOver :
+        for e in event.get():
+            if e.type == QUIT :
+                gameOver = True
+
+            if e.type ==KEYDOWN and e.key == K_SPACE:
+                initial()
+
 
 def initial():
 
@@ -249,16 +287,5 @@ def initial():
             if e.type ==KEYDOWN and e.key == K_SPACE:
                 play()
 
-
-    screen.fill((0,0,0))
-    font.init()
-    myfont = font.SysFont('Comic Sans MS',56)
-    textsurface = myfont.render('GAME OVER',False,RED)
-    screen.blit(textsurface,((width/2)-100,height-100))
-    logo= image.load("logo.jpg")
-    screen.blit(logo,((width/2)-200,(height/2)-200))
-    mixer.music.load("gameover.wav")
-    mixer.music.play()
-    display.flip()
 
 initial()
