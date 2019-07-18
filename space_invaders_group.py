@@ -181,6 +181,8 @@ def play():
         myfont = font.SysFont('Comic Sans MS', 18)
         textsurface = myfont.render('ESC - quit the game       P - pause the game', False, BLUE)
         screen.blit(textsurface, (30, 10))
+        textSurface = myfont.render((str(score)), False, BLUE)
+        screen.blit(textSurface, (30, 20))
         count=0
         while count<lives:
             screen.blit(lives_image,((width-150)+(count*30),10))
