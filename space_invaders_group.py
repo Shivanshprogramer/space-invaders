@@ -142,6 +142,7 @@ def play():
                     if i.colliderect(b):
                         invaderList.remove(i)
                         playerBullets.remove(b)
+                        break
 
        # control enemy bullets fire
         for i in invaderList:
