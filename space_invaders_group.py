@@ -164,6 +164,7 @@ def play():
                     mixer.music.load("shipexplosion.wav")
                     mixer.music.play()
                     lives=lives-1
+                    score=score-300
                     if lives ==0:
                         game_over()
                     enemyBullets.remove(b)
