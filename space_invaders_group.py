@@ -121,25 +121,15 @@ def play():
                 pause()
             elif e.type == KEYDOWN:
                 if e.key == K_ESCAPE:
-                    initial() 
-                if e.key == K_LEFT:
-                    px = -3
-                if e.key == K_RIGHT:
-                    px = 3
-                if len(playerBullets) < 2:
-                        playerBullets.append(Rect(player.x+50, player.y,5,20))
-            elif e.type == KEYUP:
-                if e.key == K_LEFT or e.key == K_RIGHT:
-                    px = 0
+                    initial()
+                if e.key==K_SPACE and len(playerBullets)<6:
+                    playerBullets.append(Rect(player.x+50, player.y,5,20))
+
 
         if frameCount >= 100:
             #dx = moveAliens(invaderList, dx)
             frameCount = 0
         frameCount = frameCount + 1
-        # move Player
-        if player.left+px < 0 or player.right+px > width : 
-            px = 0
-            player.move_ip(px, 0)
 
         #move bullets and check collision
         
@@ -147,6 +137,7 @@ def play():
             b.move_ip(0,-3)
             if b.y < 0 :
                 playerBullets.remove(b)
+            else:
                 for i in invaderList :
                     if i.colliderect(b):
                         invaderList.remove(i)
@@ -168,14 +159,6 @@ def play():
             if b.y > height :
                 enemyBullets.remove(b)
 
-        # drawPlayer
-        screen.blit(playerImage, player)
-
-
-
-        
-        
-                
         pressed= key.get_pressed()
 
         if pressed[K_RIGHT]==1:
