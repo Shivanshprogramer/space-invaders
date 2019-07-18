@@ -9,6 +9,7 @@ screen = display.set_mode((width, height))
 display.set_caption("Space Invader")
 
 invaderImage = image.load('alien.jpg')
+lives_image= image.load('heart.jpg')
 
 #colors palette
 BLACK = ( 0, 0, 0)
@@ -19,11 +20,38 @@ BLUE = ( 0, 0, 255)
 GOLD=( 230, 215, 0)
 
 #invaders motion
-i_move_x=1.5
-i_move_y=70
+#exact values given inside play() function
+i_move_x=0
+i_move_y=0
+
+temp_x=0
+temp_y=0
+
+paused_state=0
+
+lives=0
 
 #input - none
 #output - a list of invaders
+
+def pause():
+    global paused_state,i_move_x,i_move_y,temp_x,temp_y
+
+    if paused_state==0:
+        temp_x=i_move_x
+        temp_y=i_move_y
+        i_move_x=0
+        i_move_y=0
+        paused_state=1
+    elif paused_state==1:
+        i_move_x=temp_x
+        i_move_y=temp_y
+        temp_x=0
+        temp_y=0
+        paused_state=0
+
+
+
 
 def setUpInvaders():
     invaderList = []
@@ -53,21 +81,35 @@ def drawInvaders(invaderList, screen):
 gameOver = False
 
 def play():
-    global gameOver, i_move_y, i_move_x, invaderList, screen
+    global gameOver, i_move_y, i_move_x, invaderList, screen, paused_state,lives
     # set up invaders
     invaderList = setUpInvaders()
-    #in case game was restarted once invaders moving in opposite dir
-    if i_move_x<0:
-        i_move_x*=-1
 
-    while not gameOver :
+    #initialising the values when game starts
+    i_move_x = 1.5
+    i_move_y = 70
+    paused_state = 0
+    lives = 5
+
+    while not gameOver:
         for e in event.get():
-            if e.type == QUIT :
+            if e.type == QUIT:
                 gameOver = True
-            elif e.type==KEYDOWN and e.key==K_ESCAPE:
+            elif e.type == KEYDOWN and e.key == K_ESCAPE:
                 initial()
+            elif e.type == KEYDOWN and e.key == K_p:
+                pause()
 
         screen.fill((0,0,0))
+
+        myfont = font.SysFont('Comic Sans MS', 18)
+        textsurface = myfont.render('ESC - quit the game       P - pause the game', False, BLUE)
+        screen.blit(textsurface, (30, 10))
+
+        count=0
+        while count<lives:
+            screen.blit(lives_image,((width-150)+(count*30),10))
+            count+=1
 
         for invader in invaderList:
             if invader.right > width or invader.left < 0:
@@ -83,6 +125,11 @@ def play():
         #draw invaders
         drawInvaders(invaderList, screen)
 
+        if paused_state==1:
+            myfont = font.SysFont('Comic Sans MS', 60)
+            textsurface = myfont.render('GAME PAUSED', False, GOLD)
+            draw.rect(screen,BLACK,((width/2)-210,height/2,450,100))
+            screen.blit(textsurface, ((width/2)-200, height/2))
         #show the newly drawn screen (double buffering)
         display.flip()
 
