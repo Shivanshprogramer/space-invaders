@@ -123,6 +123,8 @@ def play():
                 if e.key == K_ESCAPE:
                     initial()
                 if e.key==K_SPACE and len(playerBullets)<6:
+                    mixer.music.load("shoot.wav")
+                    mixer.music.play()
                     playerBullets.append(Rect(player.x+50, player.y,5,20))
 
 
