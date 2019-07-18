@@ -156,6 +156,8 @@ def play():
         for b in enemyBullets:
             b.move_ip(0,3)
             if b.colliderect(player):
+                mixer.music.load("shipexplosion.wav")
+                mixer.music.play()
                 lives=lives-1
                 enemyBullets.remove(b)
 
